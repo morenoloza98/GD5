@@ -130,39 +130,44 @@ io.on("connection", function(socket) {
   });
 
   socket.on("click.button", function(data) {
-    let city = data.answerOne;
-    let color = data.answerTwo;
-    let animal = data.answerThree;
+    // let city = data.answerOne;
+    // let color = data.answerTwo;
+    // let animal = data.answerThree;
     let player = board.players.find((player) => player.socket.id == socket.id);
-    // board.players.forEach(player => {
-      if(player.a1 === "" && player.a2 === "" && player.a3 === "" && player.name === data.name){
-        if(city[0].toLowerCase === letterToCheck.toLowerCase){
-          player.a1 = data.answerOne;
-          player.score += 100;
-        }
-        if(color[0].toLowerCase === letterToCheck.toLowerCase){
-          player.a2 = data.answerTwo;
-          player.score += 100;
-        }
-        if(animal[0].toLowerCase === letterToCheck.toLowerCase){
-          player.a3 = data.answerThree;
-          player.score += 100;
-        }
-        if(city === "-" || color === "-" || animal === "-"){
-          player.score -=100;
-        }
+    if(player.a1 === "" && player.a2 === "" && player.a3 === "" && player.name === data.name){
+      if(data.answerOne[0].toLowerCase === letterToCheck.toLowerCase){
+        player.a1 = data.answerOne;
+        player.score += 100;
       }
-    // });
-    console.log("Second players print: ");
-    console.log(board.players);
-    players = board.players.map((player, i) => {
-      return {name: player.name, score: player.score}
-    });
-
-    io.sockets.emit("end.game", {
-      scorePlayers: players
-    });
-
+      if(data.answerTwo[0].toLowerCase === letterToCheck.toLowerCase){
+        player.a2 = data.answerTwo;
+        player.score += 100;
+      }
+      if(data.answerThree[0].toLowerCase === letterToCheck.toLowerCase){
+        player.a3 = data.answerThree;
+        player.score += 100;
+      }
+      if(data.answerOne === "-"){
+        player.score -=100;
+      }
+      if(data.answerTwo === "-"){
+        player.score -=100;
+      }
+      if(data.answerThree === "-"){
+        player.score -=100;
+      }
+    }
+    
+    if(!socket.sentMyData){
+      players = board.players.map((player, i) => {
+        return {name: player.name, score: player.score}
+      });
+      io.sockets.emit("end.game", {
+        scorePlayers: players
+      });
+      socket.sentMyData = true;
+    }
+    
   });
 
 });

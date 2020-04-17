@@ -89,14 +89,16 @@ socket.on("opponent.left", function() {
 });
 
 socket.on("end.game", function(data) {
-    // $("#winner").text(data.scorePlayers);
     $.each(data.scorePlayers, function(index, value){
-        $("#winner").append(data.scorePlayers[index].name + ": " + data.scorePlayers[index].score + '<br>');
+        if(!(($("#winner").text()).includes(data.scorePlayers[index].name)) && !(data.scorePlayers[index].score === 0)){
+            $("#winner").append(data.scorePlayers[index].name + ": " + data.scorePlayers[index].score + '<br>');
+        }
     });
     $(".board").attr("disabled", true);
     $("#firstField").attr("disabled", true);
     $("#secondField").attr("disabled", true);
     $("#thirdField").attr("disabled", true);
+    socket.emit("disconnect");
 });
 
 $(function() {
