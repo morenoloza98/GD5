@@ -23,6 +23,7 @@ socket.on("timer.running", function(data){
         text: data.msg,
         position: "bottom-left"
     });
+    $(".board button").attr("disabled", true);
 })
 
 socket.on("time.over", function(){
@@ -80,14 +81,17 @@ socket.on("game.begin", function(data) {
 });
 
 socket.on("opponent.left", function() {
-    $("#message").text("Your opponent left the game.");
+    $("#message").text("Tu oponente ha dejado la partida.");
     $(".board button").attr("disabled", true);
+    $("#firstField").attr("disabled", true);
+    $("#secondField").attr("disabled", true);
+    $("#thirdField").attr("disabled", true);
 });
 
 socket.on("end.game", function(data) {
-    data.scorePlayers.forEach(player => {
-        $("#winner").append("<p>" + player.name + "</p>");
-        $("#winner").append("<p>" + player.score + "</p>");
+    // $("#winner").text(data.scorePlayers);
+    $.each(data.scorePlayers, function(index, value){
+        $("#winner").append(data.scorePlayers[index].name + ": " + data.scorePlayers[index].score + '<br>');
     });
     $(".board").attr("disabled", true);
     $("#firstField").attr("disabled", true);

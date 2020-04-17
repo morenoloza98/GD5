@@ -112,6 +112,7 @@ io.on("connection", function(socket) {
         }
       }
     })
+    io.sockets.emit("opponent.left");
   });
 
   if(board.players.length >= 2){
@@ -132,12 +133,7 @@ io.on("connection", function(socket) {
     let city = data.answerOne;
     let color = data.answerTwo;
     let animal = data.answerThree;
-    let playerId = socket.id;
-    let player = board.players.find((player) => player.socket.id = playerId);
-    console.log("Socket id: " + socket.id);
-    console.log("Player's socket id: " + player.socket.id);
-    console.log("Player's name: " + player.name);
-    console.log("Player's name from client: " + data.name);
+    let player = board.players.find((player) => player.socket.id == socket.id);
     // board.players.forEach(player => {
       if(player.a1 === "" && player.a2 === "" && player.a3 === "" && player.name === data.name){
         if(city[0].toLowerCase === letterToCheck.toLowerCase){
@@ -156,7 +152,8 @@ io.on("connection", function(socket) {
           player.score -=100;
         }
       }
-    // })
+    // });
+    console.log("Second players print: ");
     console.log(board.players);
     players = board.players.map((player, i) => {
       return {name: player.name, score: player.score}
@@ -165,7 +162,6 @@ io.on("connection", function(socket) {
     io.sockets.emit("end.game", {
       scorePlayers: players
     });
-    
 
   });
 
