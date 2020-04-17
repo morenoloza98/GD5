@@ -130,30 +130,28 @@ io.on("connection", function(socket) {
   });
 
   socket.on("click.button", function(data) {
-    // let city = data.answerOne;
-    // let color = data.answerTwo;
-    // let animal = data.answerThree;
+    console.log(letterToCheck);
     let player = board.players.find((player) => player.socket.id == socket.id);
-    if(player.a1 === "" && player.a2 === "" && player.a3 === "" && player.name === data.name){
-      if(data.answerOne[0].toLowerCase === letterToCheck.toLowerCase){
-        player.a1 = data.answerOne;
+    player.a1 = data.answerOne;
+    player.a2 = data.answerTwo;
+    player.a3 = data.answerThree;
+    if(player.a1 !== "" && player.a2 !== "" && player.a3 !== "" && player.name === data.name){
+      if(player.a1[0].toLowerCase === letterToCheck.toLowerCase){
         player.score += 100;
       }
-      if(data.answerTwo[0].toLowerCase === letterToCheck.toLowerCase){
-        player.a2 = data.answerTwo;
+      if(player.a2[0].toLowerCase === letterToCheck.toLowerCase){
         player.score += 100;
       }
-      if(data.answerThree[0].toLowerCase === letterToCheck.toLowerCase){
-        player.a3 = data.answerThree;
+      if(player.a3[0].toLowerCase === letterToCheck.toLowerCase){
         player.score += 100;
       }
-      if(data.answerOne === "-"){
+      if(player.a1 === "-"){
         player.score -=100;
       }
-      if(data.answerTwo === "-"){
+      if(player.a2 === "-"){
         player.score -=100;
       }
-      if(data.answerThree === "-"){
+      if(player.a3 === "-"){
         player.score -=100;
       }
     }
@@ -173,7 +171,7 @@ io.on("connection", function(socket) {
 });
 
 function chooseLetter(){
-  let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let alphabet = "abcdefghijklmnopqrstuvwxyz";
   let randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
   letterToCheck = randomLetter;
 }
