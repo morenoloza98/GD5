@@ -1,11 +1,26 @@
 <main role="main" class="container">
   <div class="starter-template">
-    <h1>Bootstrap starter template</h1>
-    <p class="lead">
-      Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.
-    </p>
-    <p>
-      Source: <a href="https://getbootstrap.com/docs/4.0/examples/" target="_blank">https://getbootstrap.com/docs/4.0/examples/</a>
-    </p>
+    <div class="mb-3 font-weight-bold" id="player"></div>
+    <div class="mb-3 font-weight-light font-italic" id="message">Esperando oponente...</div>
+    <div class="mb-3" id="displayLetter">La letra a utilizar es:</div>
+    <div class="board border border-dark">
+      <div class="form-group m-5">
+        <input id="firstField" class="form-control mb-2" type="text" placeholder="Ciudad">
+        <input id="secondField" class="form-control mb-2" type="text" placeholder="Color">
+        <input id="thirdField" class="form-control mb-2" type="text" placeholder="Animal">
+        <button type="submit" class="btn btn-success" onclick="receivedBasta()">Basta!</button>
+      </div>
+    </div>
+    <div class="mt-5 p-2 row card">
+      <p>Jugadores: </p>
+      <div class="mr-5" id="winner">
+      </div>
+    </div>
+
+        {{!-- <div class="board">
+            <button id="r0c0"></button> <button id="r0c1"></button> <button id="r0c2"></button>
+            <button id="r1c0"></button> <button id="r1c1"></button> <button id="r1c2"></button>
+            <button id="r2c0"></button> <button id="r2c1"></button> <button id="r2c2"></button>
+        </div> --}}
   </div>
 </main>
